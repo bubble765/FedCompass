@@ -5,11 +5,13 @@
 !**/.env.example
 
 # ---- Large local artifacts ----
-.venv-fedcompass/
-models/
-real_data/
-参考/
-outputs/*.pptx
+# 注意：必须用前导 / 锚定到仓库根目录。
+# 不能写成 models/ —— 那会连带排除 0623v1李-后端/app/models/（ORM 模型包），
+# 导致克隆后后端无法启动（ModuleNotFoundError: No module named 'app.models'）。
+/.venv-fedcompass/
+/models/
+/real_data/
+/参考/
 
 # ---- Internal documents (not for public release) ----
 王老师-团队介绍6.22.pptx
