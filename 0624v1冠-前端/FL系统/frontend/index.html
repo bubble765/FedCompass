@@ -6,7 +6,11 @@
     <title>FedCompass 展示系统</title>
     <link rel="stylesheet" href="./styles.css?v=20260726-security-evidence-fields" />
     <script>
-      window.__FEDCOMPASS_API_BASE__ = "http://127.0.0.1:8010";
+      // 后端地址由 app.js 按运行场景自动推导，此处留空即可：
+      //   - 本地静态服务（端口 4173）→ http://localhost:8000
+      //   - Docker 部署（nginx 同源反代 /api/）→ 同源相对路径
+      // 如需指向其他后端（例如后端跑在 8010），取消下面这行注释并改成你的地址：
+      // window.__FEDCOMPASS_API_BASE__ = "http://127.0.0.1:8000";
     </script>
   </head>
   <body>
