@@ -21,6 +21,7 @@ from app.schemas.schemas import ExperimentConfig
 async def lifespan(app: FastAPI):
     await init_db()
     await seed_database()
+    await seed_demo_experiments()
     await stop_orphan_running_experiments()
     yield
 
@@ -112,7 +113,20 @@ async def seed_database():
 
 
 async def seed_demo_experiments():
-    """Pre-generate 4 demo experiments with 100 rounds of mock data directly in DB."""
+    """Pre-generate 4 demo experiments with 100 rounds of mock data directly in DB.
+
+    Only runs while the experiments table is empty: restarts must not keep
+    appending duplicates, and once real experiments exist the demo data
+    should never be inserted on top of them.
+    """
+    from sqlalchemy import func, select
+
+    async with async_session() as db:
+        existing = await db.scalar(select(func.count()).select_from(Experiment))
+        if existing:
+            print(f"[seed] Skipped demo experiments: {existing} experiment(s) already present.")
+            return
+
     import math, random, hashlib, datetime, uuid
 
     demo_configs = [
