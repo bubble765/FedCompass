@@ -1,0 +1,21 @@
+本地环境：.venv-fedcompass
+Python 版本：3.13
+
+后端（终端 1）：
+cd /Users/bubble/Desktop/FedCompass_副本/0623v1李-后端
+../.venv-fedcompass/bin/python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+
+配置助手（可选）：
+打开“实验配置”页后，可以在“实验场景智能体”中选择“本地模型”或“API 模型”。
+本地模型填写 OpenAI-compatible 服务地址和模型名，例如 http://127.0.0.1:8001/v1、Qwen/Qwen3-0.6B。
+API 模型填写自己的 API Base URL、API Key 和模型名；API Key 只用于当前请求，不会持久化。
+如果不填写请求级模型配置，后端仍兼容使用 .env 中的 LLM_API_KEY、LLM_BASE_URL、LLM_MODEL。
+模型服务不可用时，配置助手会回退到本地规则解析。
+
+前端（终端 2）：
+cd /Users/bubble/Desktop/FedCompass_副本/0624v1冠-前端/FL系统/frontend
+/Users/bubble/Desktop/FedCompass_副本/.venv-fedcompass/bin/python -m http.server 4173
+
+访问：
+前端：http://127.0.0.1:4173
+后端：http://127.0.0.1:8000

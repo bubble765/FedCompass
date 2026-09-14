@@ -1,0 +1,68 @@
+name: fedcompass
+
+services:
+  model:
+    build:
+      context: .
+      dockerfile: docker/model/Dockerfile
+    expose:
+      - "8001"
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: .
+      dockerfile: docker/backend/Dockerfile
+    environment:
+      DATABASE_URL: sqlite+aiosqlite:////data/fedcompass.db
+      REAL_DATA_ROOT: /data/real_data
+      CORS_ORIGINS: '["http://localhost:8080"]'
+      LLM_API_KEY: ""
+      LLM_BASE_URL: ""
+      LLM_MODEL: gpt-4o-mini
+      LLM_PROVIDER: local
+      LLM_LOCAL_BASE_URL: http://model:8001/v1
+      LLM_LOCAL_MODEL: Qwen/Qwen3-0.6B
+      LLM_MAX_TOKENS: "1024"
+      LLM_TIMEOUT_SECONDS: "20"
+      AGENT_LLM_PROVIDER: local
+      AGENT_LLM_LOCAL_BASE_URL: http://model:8001/v1
+      AGENT_LLM_LOCAL_MODEL: Qwen/Qwen3-0.6B
+      AGENT_LLM_MAX_TOKENS: "1600"
+      AGENT_LLM_TIMEOUT_SECONDS: "180"
+      RUNTIME_AGENT_CHECK_INTERVAL_ROUNDS: "3"
+    volumes:
+      - fedcompass_db:/data
+      - ./real_data:/data/real_data:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      model:
+        condition: service_started
+    expose:
+      - "8000"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - import urllib.request; urllib.request.urlopen("http://127.0.0.1:8000/healthz", timeout=3)
+      interval: 30s
+      timeout: 5s
+      start_period: 30s
+      retries: 3
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend/Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  fedcompass_db:

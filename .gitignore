@@ -1,0 +1,52 @@
+# ---- Secrets (never commit) ----
+.env
+**/.env
+!.env.example
+!**/.env.example
+
+# ---- Large local artifacts ----
+.venv-fedcompass/
+models/
+real_data/
+参考/
+outputs/*.pptx
+
+# ---- Internal documents (not for public release) ----
+王老师-团队介绍6.22.pptx
+算力网数据安全应用与防护系统*
+FedCompass平台与联邦系统需求对照分析_详细版.docx
+
+# ---- Databases ----
+*.db
+*.sqlite
+*.sqlite3
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ---- Node ----
+node_modules/
+dist/
+.vite/
+*.log
+
+# ---- macOS ----
+.DS_Store
+__MACOSX/
+._*
+
+# ---- Editors / IDE ----
+.vscode/
+.idea/
+*.swp
+*~

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FedCompass 展示系统</title>
+    <link rel="stylesheet" href="./styles.css?v=20260726-security-evidence-fields" />
+    <script>
+      window.__FEDCOMPASS_API_BASE__ = "http://127.0.0.1:8010";
+    </script>
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">FC</div>
+          <div>
+            <p class="eyebrow">FedCompass</p>
+            <h1>展示系统</h1>
+          </div>
+        </div>
+        <nav class="nav" id="nav"></nav>
+        <div class="sidebar-footer">
+          <p class="eyebrow">系统模式</p>
+          <code id="api-base-label">联调配置已就绪</code>
+          <button id="mock-toggle" class="ghost-button" type="button">切换演示模式</button>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">联邦学习展示平台</p>
+            <h2 id="page-title">总览</h2>
+          </div>
+          <div class="topbar-actions">
+            <span class="status-badge" id="backend-status">后端状态检测中</span>
+            <button id="refresh-button" class="primary-button" type="button">刷新当前页面</button>
+          </div>
+        </header>
+
+        <section id="alert-region"></section>
+        <section id="view-root" class="view-root"></section>
+      </main>
+    </div>
+
+    <template id="empty-state-template">
+      <div class="panel empty-state">
+        <h3>暂无数据</h3>
+        <p class="muted"></p>
+      </div>
+    </template>
+
+    <script type="module" src="./app.js?v=20260726-security-evidence-fields"></script>
+  </body>
+</html>

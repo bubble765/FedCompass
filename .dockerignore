@@ -1,0 +1,22 @@
+.env
+.env.*
+**/.env
+**/.env.*
+.venv-fedcompass/
+.git/
+.codex/
+.agents/
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*.db
+**/*.db
+real_data/
+参考/
+**/*.pdf
+**/*.docx
+.DS_Store
+node_modules/
+
+# Qwen3-0.6B is intentionally part of the model image build context.
+# Do not add models/ or *.gguf here unless the deployment strategy changes.
